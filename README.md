@@ -1,2 +1,2 @@
-# uk-traffic-accidents
-UK traffic accidents data analysis
+# us-traffic-accidents
+US traffic accidents data analysis
