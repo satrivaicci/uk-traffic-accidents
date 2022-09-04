@@ -47,7 +47,7 @@ app.layout = html.Div(children=[
                 ),
         ], className='two columns'),
         html.Div([dcc.Graph(id='figure-1'),
-                  dcc.Graph(id='top-cities-chart'),
+                  dcc.Graph(id='top-cities-bar'),
             ], className='ten columns'),
     ], className='twelve columns'),
     html.A('Code on Github', href=githublink),
@@ -99,6 +99,7 @@ def make_figure(year):
     )
 
     topCitiesBar = go.Figure(data=[topCitiesData], layout=topCitiesLayout)
+    
     return fig, topCitiesBar
 
 
