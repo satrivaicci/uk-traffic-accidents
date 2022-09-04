@@ -14,7 +14,7 @@ githublink = 'https://github.com/satrivaicci/us-traffic-accidents'
 ########## Set up the chart
 
 import pandas as pd
-df = pd.read_csv('assets/US_Accidents_Dec21_updated.csv')
+df = pd.read_csv('assets/US_Accidents_Dec21_small.csv')
 
 ########### Initiate the app
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -23,12 +23,7 @@ server = app.server
 app.title=tabtitle
 
 
-#### Define Years list
-
-def getYear(startTime):
-    return int(startTime[0:4])
-
-df['Year'] = df['Start_Time'].apply(getYear)
+#### Get Years list
 years_list = df.Year.unique()
 years_list.sort()
 
@@ -40,14 +35,14 @@ dfByState = df.groupby(['Year', 'State']).size().reset_index(name='Counts')
 ########### Set up the layout
 
 app.layout = html.Div(children=[
-    html.H1('2016-2021 US Traffic Accidents, by State'),
+    html.H1('2020-2021 US Traffic Accidents, by State'),
     html.Div([
         html.Div([
                 html.H6('Select a year for analysis:'),
                 dcc.Dropdown(
                     id='options-drop',
                     options=[{'label': i, 'value': i} for i in years_list],
-                    value='2016'
+                    value='2021'
                 ),
         ], className='two columns'),
         html.Div([dcc.Graph(id='figure-1'),
