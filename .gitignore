@@ -127,3 +127,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+assets/US_Accidents_Dec21_updated.csv
