@@ -48,11 +48,11 @@ app.layout = html.Div(children=[
                     value=2021
                 ),
         ], className='two columns'),
-        html.Div([dcc.Graph(id='figure-1'),
+    ], className='twelve columns'),
+    html.Div([dcc.Graph(id='figure-1'),
                   dcc.Graph(id='top-cities-bar'),
                   dcc.Graph(id='top-weatherc-bar')
-            ], className='ten columns'),
-    ], className='twelve columns'),
+            ], className='one column'),
     html.A('Code on Github', href=githublink),
     html.Br(),
     html.A("Data Source", href=sourceurl),
