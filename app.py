@@ -29,9 +29,11 @@ years_list.sort()
 
 
 ### Group by year and state
-
 dfByState = df.groupby(['Year', 'State']).size().reset_index(name='Counts')
+### Group by year and city
 dfByCity = df.groupby(['Year', 'City']).size().sort_values(ascending=False).reset_index(name='Counts')
+### Group by year and weather condition
+dfByWeather = df.groupby(['Year', 'Weather_Condition']).size().sort_values(ascending=False).reset_index(name='Counts')
 
 ########### Set up the layout
 
@@ -48,6 +50,7 @@ app.layout = html.Div(children=[
         ], className='two columns'),
         html.Div([dcc.Graph(id='figure-1'),
                   dcc.Graph(id='top-cities-bar'),
+                  dcc.Graph(id='top-weatherc-bar')
             ], className='ten columns'),
     ], className='twelve columns'),
     html.A('Code on Github', href=githublink),
@@ -60,6 +63,7 @@ app.layout = html.Div(children=[
 # make a function that can intake any varname and produce a map.
 @app.callback(Output('figure-1', 'figure'),
               Output('top-cities-bar', 'figure'),
+              Output('top-weatherc-bar', 'figure'),
              [Input('options-drop', 'value')])
 def make_figure(year):
     mygraphtitle = f'Traffic accidents in {year}'
@@ -103,7 +107,28 @@ def make_figure(year):
 
     topCitiesBar = go.Figure(data=[topCitiesBarData], layout=topCitiesLayout)
     
-    return fig, topCitiesBar
+    
+    # Top weather bar chart
+    
+    topWeatherData = dfByWeather.loc[dfByWeather['Year'] == year].nlargest(n=15, columns=['Counts'])
+    
+    topWeatherBarData = go.Bar(
+        x=topWeatherData['Weather_Condition'],
+        y=topWeatherData['Counts'],
+        name=""
+    )
+    
+    topWeatherLayout = go.Layout(
+        title=f'Top 15 Weather Conditions with the most accidents in {year}',
+        xaxis = dict(title = 'Weather condition'), # x-axis label
+        yaxis = dict(title = 'Total accidents'), # y-axis label
+
+    )
+
+    topWeatherBar = go.Figure(data=[topWeatherBarData], layout=topWeatherLayout)
+    
+    
+    return fig, topCitiesBar, topWeatherBar
 
 
 ############ Deploy
