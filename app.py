@@ -38,7 +38,7 @@ dfByWeather = df.groupby(['Year', 'Weather_Condition']).size().sort_values(ascen
 ########### Set up the layout
 
 app.layout = html.Div(children=[
-    html.H1('2020-2021 US Traffic Accidents, by State'),
+    html.H1('2020-2021 US Traffic Accidents analysis'),
     html.Div([
         html.Div([
                 html.H6('Select a year for analysis:'),
@@ -48,11 +48,11 @@ app.layout = html.Div(children=[
                     value=2021
                 ),
         ], className='two columns'),
-    ], className='twelve columns'),
-    html.Div([dcc.Graph(id='figure-1'),
+        html.Div([dcc.Graph(id='figure-1'),
                   dcc.Graph(id='top-cities-bar'),
                   dcc.Graph(id='top-weatherc-bar')
-            ], className='one column'),
+            ], className='ten columns'),
+    ], className='twelve columns'),
     html.A('Code on Github', href=githublink),
     html.Br(),
     html.A("Data Source", href=sourceurl),
