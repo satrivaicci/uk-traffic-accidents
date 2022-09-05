@@ -85,20 +85,23 @@ def make_figure(year):
     
     
     # Top cities bar chart
-    topCitiesData = go.Bar(
-        x=dfByCity.loc[df['Year'] == year]['City'],
-        y=dfByCity.loc[df['Year'] == year]['Counts'],
+    
+    topCitiesData = dfByCity.loc[dfByCity['Year'] == year].nlargest(n=15, columns=['Counts'])
+    
+    topCitiesBarData = go.Bar(
+        x=topCitiesData['City'],
+        y=topCitiesData['Counts'],
         name=""
     )
     
     topCitiesLayout = go.Layout(
-        title=f'Cities with the most accidents in {year}',
+        title=f'Top 15 Cities with the most accidents in {year}',
         xaxis = dict(title = 'City'), # x-axis label
-        yaxis = dict(title = 'Total number accidents'), # y-axis label
+        yaxis = dict(title = 'Total accidents'), # y-axis label
 
     )
 
-    topCitiesBar = go.Figure(data=[topCitiesData], layout=topCitiesLayout)
+    topCitiesBar = go.Figure(data=[topCitiesBarData], layout=topCitiesLayout)
     
     return fig, topCitiesBar
 
